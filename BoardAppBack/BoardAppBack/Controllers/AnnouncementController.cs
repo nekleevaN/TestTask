@@ -40,14 +40,20 @@ namespace BoardPLL.Controllers
             {
                 return BadRequest(e.Message);
             }
-
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAnnouncementAsync(int id)
         {
-            await _announcementService.DeleteAnnouncementAsync(id);
+            try
+            {
+                await _announcementService.DeleteAnnouncementAsync(id);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
             return NoContent();
         }
 
@@ -62,29 +68,40 @@ namespace BoardPLL.Controllers
             {
                 return BadRequest(e.Message);
             }
-
             return Ok();
         }
 
         [HttpGet("byCategory")]
         public async Task<ActionResult<List<Announcement>>> GetAnnouncementsByCategoryOrSubCategory([FromQuery] string category = null)
         {
-            var announcements = await _announcementService.GetAnnouncementsByCategoryOrSubCategoryAsync(category);
-
-            if (announcements == null || announcements.Count == 0)
+            try
             {
-                return NotFound("Оголошення не знайдено.");
-            }
+                var announcements = await _announcementService.GetAnnouncementsByCategoryOrSubCategoryAsync(category);
 
-            return Ok(announcements);
+                if (announcements == null || announcements.Count == 0)
+                {
+                    return NotFound("Оголошення не знайдено.");
+                }
+
+                return Ok(announcements);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Announcement>> GetAnnouncementsById(int id)
         {
-            var announcements = await _announcementService.GetAnnouncementById(id);
-
-            return Ok(announcements);
+            try
+            {
+                var announcements = await _announcementService.GetAnnouncementById(id);
+                return Ok(announcements);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
-
     }
 }

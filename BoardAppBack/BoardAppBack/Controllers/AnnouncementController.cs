@@ -2,6 +2,7 @@
 using BoardDAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using BoardBLL.DTOs.Request;
+using BoardPLL.Constants;
 
 namespace BoardPLL.Controllers
 {
@@ -20,8 +21,7 @@ namespace BoardPLL.Controllers
         {
             try
             {
-                var announcements = await _announcementService.GetAnnouncementAsync();
-                return Ok(announcements);
+                return Ok(await _announcementService.GetAnnouncementAsync());
             }
             catch
             {
@@ -71,7 +71,7 @@ namespace BoardPLL.Controllers
             return Ok();
         }
 
-        [HttpGet("byCategory")]
+        [HttpGet(RouteNames.ByCategory)]
         public async Task<ActionResult<List<Announcement>>> GetAnnouncementsByCategoryOrSubCategory([FromQuery] string category = null)
         {
             try
@@ -90,13 +90,13 @@ namespace BoardPLL.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Announcement>> GetAnnouncementsById(int id)
         {
             try
             {
-                var announcements = await _announcementService.GetAnnouncementById(id);
-                return Ok(announcements);
+                return Ok(await _announcementService.GetAnnouncementById(id));
             }
             catch
             {

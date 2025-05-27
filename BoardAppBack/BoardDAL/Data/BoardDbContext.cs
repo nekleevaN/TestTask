@@ -9,6 +9,7 @@ namespace BoardDAL.Data
             : base(options)
         {
         }
+
         public DbSet<Announcement> Announcements { get; set; }
     }
 }

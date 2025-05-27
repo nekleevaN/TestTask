@@ -8,7 +8,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<BoardDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        x => x.MigrationsAssembly("BoardDAL") 
+    ));
 
 builder.Services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
 builder.Services.AddTransient<IAnnouncementService, AnnouncementService>();

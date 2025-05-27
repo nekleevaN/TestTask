@@ -16,54 +16,40 @@ namespace BoardDAL.Repositories
 
         public async Task<List<Announcement>> GetAnnouncementsAsync()
         {
-            return await _context.Announcements
-                    .FromSqlRaw("EXEC GetAnnouncements")
-                    .ToListAsync();
+            return await _context.Announcements.ToListAsync();
         }
 
         public async Task CreateAnnouncementAsync(Announcement announcement)
         {
-            await _context.Database.ExecuteSqlRawAsync(
-                "EXEC AddAnnouncement @Title={0}, @Description={1}, @Category={2}, @SubCategory={3}",
-                announcement.Title,
-                announcement.Description,
-                announcement.Category,
-                announcement.SubCategory
-            );
+            _context.Announcements.Add(announcement);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAnnouncementAsync(Announcement announcement)
         {
-            await _context.Database.ExecuteSqlRawAsync(
-                "EXEC UpdateAnnouncement @Id={0}, @Title={1}, @Description={2}, @Status={3}, @Category={4}, @SubCategory={5}",
-                announcement.Id,
-                announcement.Title,
-                announcement.Description,
-                announcement.Status,
-                announcement.Category,
-                announcement.SubCategory
-            );
+            _context.Announcements.Update(announcement);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAnnouncementAsync(int id)
         {
-            await _context.Database.ExecuteSqlRawAsync(
-                "EXEC DeleteAnnouncement @Id={0}", id);
+            var entity = await _context.Announcements.FindAsync(id);
+            if (entity != null)
+            {
+                _context.Announcements.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<Announcement> GetAnnouncementByIdAsync(int id)
         {
-            var announcements = await _context.Announcements
-                .FromSqlRaw("EXEC GetAnnouncementsById @Id={0}", id)
-                .ToListAsync();
-
-            return announcements.FirstOrDefault();
+            return await _context.Announcements.FindAsync(id);
         }
 
         public async Task<List<Announcement>> GetAnnouncementsByCategoryOrSubCategoryAsync(string category)
         {
             return await _context.Announcements
-                .FromSqlRaw("EXEC GetAnnouncementsByCategoryOrSubCategory @CategoryOrSubCategory={0}", category)
+                .Where(a => a.Category == category || a.SubCategory == category)
                 .ToListAsync();
         }
     }

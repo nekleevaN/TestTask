@@ -32,6 +32,7 @@ namespace BoardBLL.Mappers
                 SubCategory = announcementDTO.SubCategory,
             };
         }
+
         public static Announcement UpdateDtoToEntity(this AnnouncementRequest announcementRequest)
         {
             return new Announcement()

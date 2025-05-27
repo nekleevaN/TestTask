@@ -22,22 +22,27 @@ namespace BoardBLL.Services
             var announcements = await _announcementRepository.GetAnnouncementsAsync();
             return announcements.Select(i => AnnouncementMapper.ToDTO(i)).ToList();
         }
+
         public async Task CreateAnnouncementAsync(AnnouncementRequest announcementRequest)
         {
             await _announcementRepository.CreateAnnouncementAsync(announcementRequest.UpdateDtoToEntity());
         }
+
         public async Task DeleteAnnouncementAsync(int id)
         {
             await _announcementRepository.DeleteAnnouncementAsync(id);
         }
+
         public async Task UpdateAnnouncementAsync(UpdateAnnouncementRequest updateAnnouncementRequest)
         {
             await _announcementRepository.UpdateAnnouncementAsync(updateAnnouncementRequest.DtoToEntity());
         }
+
         public async Task<List<Announcement>> GetAnnouncementsByCategoryOrSubCategoryAsync(string category)
         {
             return await _announcementRepository.GetAnnouncementsByCategoryOrSubCategoryAsync(category);
         }
+
         public async Task<Announcement> GetAnnouncementById(int id)
         {
             return await _announcementRepository.GetAnnouncementByIdAsync(id);

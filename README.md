@@ -52,6 +52,6 @@ Welcome to the ** Bulletin Board** system! This project demonstrates a full-stac
 
 ### **Database**
 - Table for storing announcements with structured schema.
-- Stored procedures for efficient and secure database operations.
+
 
 

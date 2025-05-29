@@ -22,7 +22,7 @@ Welcome to the ** Bulletin Board** system! This project demonstrates a full-stac
 
 ### **Backend**
 - **ASP.NET Core**: RESTful API design.
-- **CRUD Operations**: Implemented using stored procedures in MS SQL.
+- **CRUD Operations**
 - **Database**: MS SQL for data storage and manipulation.
 
 ### **Frontend**
@@ -52,6 +52,22 @@ Welcome to the ** Bulletin Board** system! This project demonstrates a full-stac
 
 ### **Database**
 - Table for storing announcements with structured schema.
+---
 
+## 🛠️ **How to start**
 
+### **Step 1**
+- **Open the project**: Open the BoardApp.sln file in Visual Studio.
 
+### **Step 2**
+- **Setting up the database**: Open the appsettings.json file in the BoardPLL project and specify the correct SQL Server connection string. For example: 
+"ConnectionStrings": { " 
+ " "DefaultConnection": "Server=localhost;Database=BoardDb;Trusted_Connection=True;" 
+} 
+
+### **Step 3**
+- **Apply migrations to the database**: Open the Package Manager Console and run the command:
+Update-Database. 
+
+### **Step 4**
+- **Launch the project**: Set BoardAppFront and BoardPLL as the starting project. Run the application through Visual Studio (F5 or Ctrl+F5).
